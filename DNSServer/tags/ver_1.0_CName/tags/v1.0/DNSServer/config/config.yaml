@@ -1,0 +1,26 @@
+---
+ListenPort:
+  53
+  20053
+  30053
+---
+MainServer:
+  IP:0.0.0.0
+---
+Nameserver:
+  IP:192.168.231.20
+  Port:53
+---
+Database:
+  IP:192.168.230.240
+  name:secDNS
+  password:ulaysiP801
+  user:root
+---
+BlockedPage:
+  IP:202.123.3.118
+---
+#You will need to convert the time to live to decimal E.g 5min=300seconds=100101100=0.0.1.44
+TTL:
+  Time:0.0.14.16
+---

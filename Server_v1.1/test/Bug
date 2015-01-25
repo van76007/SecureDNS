@@ -1,0 +1,234 @@
+Sample queries:
+
+dig @127.0.0.1 -p 10053 zzcht.medicw2.ru
+dig @127.0.0.1 -p 20053 zzcht.medicw2.ru
+dig @127.0.0.1 -p 30053 zzcht.medicw2.ru
+
+Test RBL
+
+dig @127.0.0.1 -p 10053 newsletterupdatecenterline.com
+
+Fire tcpdump at the same time to log:
+
+sudo tcpdump -w bug.pcap -i em0 -s 1024
+--------------------------------------------
+
+Query RBL:
+
+dig @127.0.0.1 -p 10053 zzcht.medicw2.ru
+
+-----------------------------------------------------------------
+domain is: medicw2.ru
+Thread ID :: [0x801bf6a00]
+DEBUG :: 2011-Sep-26 06:42:33.140348 :: Relay packet thread initiated ...
+Thread ID :: [0x801a1d700]
+DEBUG :: 2011-Sep-26 06:42:33.140503 :: Monitor thread initiated ...
+Thread ID :: [0x801bf6900]
+dig @127.0.0.1 -p 10053 zzcht.medicw2.ru
+
+-------------
+DEBUG :: 2011-Sep-26 06:42:33.140747 :: Relay packet thread initiated ...
+Thread ID :: [0x801bf6c00]
+DEBUG :: 2011-Sep-26 06:42:33.140866 :: Relay packet thread initiated ...
+Thread ID :: [0x801bf6b00]
+DEBUG :: 2011-Sep-26 06:42:33.141138 :: Relay packet thread initiated ...
+Read from DNS server OK. recv_len is 157
+Read from DNS server OK. recv_len is 102
+Thread ID :: [0x801bf6c00]
+DEBUG :: 2011-Sep-26 06:42:33.176616 :: rhsbl.ahbl.org_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 102
+Segmentation fault (core dumped)
+
+---------
+Code-wise:
+
+ at /home/dvv/NXTGEN_DNS/trunk/Server_v1.1/test/server/dns_util.cpp:125
+#2  0x000000000042e933 in screenDNS::forwarder::find_fact (this=0x801a95dc0,
+    packet=@0x7fffeb35a7f8, packet_len=34, suffix=@0x7fffeb35aa00)
+    at /home/dvv/NXTGEN_DNS/trunk/Server_v1.1/test/server/forwarder.cpp:826
+	
+	------------------
+	
+	Overwrite header:
+	
+	Post job at: 2011-09-26T07:31:01.232571
+server::start_receive at 2011-09-26T07:31:01.232899
+server::process packet len 34 in thread[0x801a2ce00]
+Thread ID :: [0x801a2ce00]
+DEBUG :: 2011-Sep-26 07:31:01.233149 :: Relay_Back packet thread initiated ...
+Finish reading header...
+p->id: 0xb374, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+domain/sub-domain is: medicw2.ru
+domain is: medicw2.ru
+Read from DNS server OK. recv_len is 157
+Finish reading header...
+p->id: 0xb374, p->flags: 0x8180, p->qdcount: 1, p->ancount: 2, p->nscount: 2, p->arcount: 2
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+name=   zzcht.medicw2.ru ttl=       300 class= IN type=    A ip=115.239.229.196
+Finish reading answer[0]
+name=   zzcht.medicw2.ru ttl=       300 class= IN type=    A ip=122.224.18.23
+Finish reading answer[1]
+Finish reading answer ...
+name=         medicw2.ru ttl=    342625 class= IN type=   NS ns1.dnseeam.com.ua
+Finish reading authority[0]
+name=         medicw2.ru ttl=    342625 class= IN type=   NS ns2.dnsoftwa.ru
+Finish reading authority[1]
+Finish reading authority ...
+Finish reading additional resource record ...
+Thread ID :: [0x801a2ff00]
+DEBUG :: 2011-Sep-26 07:31:01.810722 :: forwarder:handle_send OK. bytes_transferred=157
+server::handle_receive: Receiving data len 34
+Post job at: 2011-09-26T07:31:16.211898
+server::start_receive at 2011-09-26T07:31:16.212120
+server::process packet len 34 in thread[0x801a1d800]
+Finish reading header...
+p->id: 0xa2cc, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+domain/sub-domain is: medicw2.ru
+domain is: medicw2.ru
+Thread ID :: [0x801a1d800]
+DEBUG :: 2011-Sep-26 07:31:16.213376 :: Monitor thread initiated ...
+Finish reading header...
+p->id: 0xa2cc, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+Finish reading header...
+p->id: 0xa2cc, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+Thread ID :: [0x801bf2b00]
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+DEBUG :: 2011-Sep-26 07:31:16.213712 :: Relay packet thread initiated ...
+Finish reading header...
+p->id: 0xa2cc, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+Thread ID :: [0x801bf2a00]
+DEBUG :: 2011-Sep-26 07:31:16.214011 :: Relay packet thread initiated ...
+Thread ID :: [0x801bf2d00]
+DEBUG :: 2011-Sep-26 07:31:16.213352 :: Relay packet thread initiated ...
+Thread ID :: [0x801bf2c00]
+DEBUG :: 2011-Sep-26 07:31:16.213767 :: Relay packet thread initiated ...
+Read from DNS server OK. recv_len is 106
+Thread ID :: [0x801bf2b00]
+DEBUG :: 2011-Sep-26 07:31:16.243515 :: dnsbl.sorbs.net_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 106
+Finish reading header...
+p->id: 0x3100, p->flags: 000000, p->qdcount: 0, p->ancount: 0, p->nscount: 42294, p->arcount: 65024
+name=                    ttl=2734819328 class=UNKNOWN type=UNKNOWN Unknown
+Finish reading authority[0]
+Finish reading authority ...
+Finish reading additional resource record ...
+Read from DNS server OK. recv_len is 157
+Read from DNS server OK. recv_len is 102
+Thread ID :: [0x801bf2c00]
+DEBUG :: 2011-Sep-26 07:31:16.260731 :: rhsbl.ahbl.org_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 102
+Finish reading header...
+p->id: 0x3100, p->flags: 000000, p->qdcount: 0, p->ancount: 0, p->nscount: 42294, p->arcount: 65024
+name=                    ttl=2768373760 class=UNKNOWN type=UNKNOWN Unknown
+Finish reading authority[0]
+Finish reading authority ...
+Finish reading additional resource record ...
+Read from DNS server OK. recv_len is 99
+Thread ID :: [0x801bf2a00]
+DEBUG :: 2011-Sep-26 07:31:16.564841 :: multi.surbl.org_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 99
+Finish reading header...
+p->id: 0x3100, p->flags: 000000, p->qdcount: 0, p->ancount: 0, p->nscount: 42294, p->arcount: 65024
+name=                    ttl=2751596544 class=UNKNOWN type=UNKNOWN Unknown
+Finish reading authority[0]
+Finish reading authority ...
+Finish reading additional resource record ...
+Thread ID :: [0x801a1d800]
+DEBUG :: 2011-Sep-26 07:31:16.823672 :: forwarder:monitor:Notified
+Thread ID :: [0x801a1d800]
+DEBUG :: 2011-Sep-26 07:31:16.823763 :: forwarder:monitor:Terminated
+Bus error (core dumped)
+------------------------------------------------------------------
+
+server::handle_receive: Receiving data len 34
+Post job at: 2011-09-26T07:42:25.844663
+server::start_receive at 2011-09-26T07:42:25.844780
+server::process packet len 34 in thread[0x801a1d800]
+Finish reading header...
+p->id: 0xbcb2, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+domain/sub-domain is: medicw2.ru
+domain is: medicw2.ru
+Thread ID :: [0x801a1d800]
+DEBUG :: 2011-Sep-26 07:42:25.845906 :: Relay packet thread initiated ...
+Thread ID :: [0x801bd5c00]
+DEBUG :: 2011-Sep-26 07:42:25.846526 :: Monitor thread initiated ...
+Finish reading header...
+p->id: 0xbcb2, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+Thread ID :: [0x801bd5a00]
+DEBUG :: 2011-Sep-26 07:42:25.846849 :: Relay packet thread initiated ...
+Finish reading header...
+p->id: 0xbcb2, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+Thread ID :: [0x801bd5d00]
+DEBUG :: 2011-Sep-26 07:42:25.847363 :: Relay packet thread initiated ...
+Finish reading header...
+p->id: 0xbcb2, p->flags: 0x0100, p->qdcount: 1, p->ancount: 0, p->nscount: 0, p->arcount: 0
+   zzcht.medicw2.ru             IN     A name_len is 16
+Finish reading question[0]
+Finish reading question ...
+Thread ID :: [0x801bd5b00]
+DEBUG :: 2011-Sep-26 07:42:25.847741 :: Relay packet thread initiated ...
+Read from DNS server OK. recv_len is 157
+Read from DNS server OK. recv_len is 102
+Thread ID :: [0x801bd5d00]
+DEBUG :: 2011-Sep-26 07:42:25.885300 :: rhsbl.ahbl.org_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 102
+Finish reading header...
+p->id: 0x3100, p->flags: 000000, p->qdcount: 0, p->ancount: 0, p->nscount: 42294, p->arcount: 65024
+name=                    ttl=3322021888 class=UNKNOWN type=UNKNOWN Unknown
+Finish reading authority[0]
+Finish reading authority ...
+Finish reading additional resource record ...
+Read from DNS server OK. recv_len is 99
+Thread ID :: [0x801bd5b00]
+DEBUG :: 2011-Sep-26 07:42:26.220871 :: multi.surbl.org_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 99
+Finish reading header...
+p->id: 0x3100, p->flags: 000000, p->qdcount: 0, p->ancount: 0, p->nscount: 42294, p->arcount: 65024
+name=                    ttl=3338799104 class=UNKNOWN type=UNKNOWN Unknown
+Finish reading authority[0]
+Finish reading authority ...
+Finish reading additional resource record ...
+Read from DNS server OK. recv_len is 106
+Thread ID :: [0x801bd5a00]
+DEBUG :: 2011-Sep-26 07:42:26.388947 :: dnsbl.sorbs.net_forwarder:find_fact:Received one answer from RBL
+Begin convert. Recv_len is 106
+Finish reading header...
+p->id: 0x3100, p->flags: 000000, p->qdcount: 0, p->ancount: 0, p->nscount: 42294, p->arcount: 65024
+name=                    ttl=3288467456 class=UNKNOWN type=UNKNOWN Unknown
+Finish reading authority[0]
+Finish reading authority ...
+Finish reading additional resource record ...
+Thread ID :: [0x801bd5c00]
+DEBUG :: 2011-Sep-26 07:42:26.638622 :: forwarder:monitor:Notified
+Thread ID :: [0x801bd5c00]
+DEBUG :: 2011-Sep-26 07:42:26.638710 :: forwarder:monitor:Terminated
+Bus error (core dumped)
+
+
+
+

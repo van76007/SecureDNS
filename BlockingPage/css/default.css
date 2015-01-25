@@ -1,0 +1,211 @@
+html, body 
+	{ 
+		font-family: verdana, arial;
+		padding: 0px;
+		text-align: center;
+		margin: 0 auto;
+		width: 100%;
+		height: 100%;
+	}
+
+.bodyIframe
+	{
+		background-color: white;
+		margin: 0 auto;
+		padding: 0;
+	}
+	
+#centered
+	{
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		width: 780px;
+		height: 50%;
+		margin: auto;
+		display: none;
+	}
+	
+#centered td
+	{
+		vertical-align: top;
+		padding: 10px;
+		text-align: left;
+	}
+	
+#centered img
+	{
+		float: left;
+	}
+	
+#centered span
+	{
+		padding: 22px;
+		text-align: left;
+		display: block;
+		float: left;
+		-moz-border-radius: 11px;
+		-webkit-border-radius: 11px;
+		border-radius: 11px;
+		margin-left: 11px;
+		margin-bottom: 11px;
+		vertical-align: middle;
+		/*border: solid 1px red;*/
+		font-size: 10pt;
+		color: white;
+		background-color: red;
+	}
+	
+#centered table
+	{
+		padding: 22px 22px;
+		background-color: white;
+		color: black;
+		width: 736px;
+		-moz-border-radius: 22px;
+		-webkit-border-radius: 22px;
+		border-radius: 22px;
+		margin-left: 0px;
+		border: solid 3px silver;
+	}
+
+#centered span.mlw
+	{
+	}
+
+#centered span.cai
+	{
+	}
+	
+#centered span.phi
+	{
+	}			
+
+#centered span strong
+	{
+		padding: 5px;
+		color: yellow;
+	}
+
+#centered highlight
+	{
+		font-size: 1.2em;
+	}
+
+a.continue
+	{
+		display: block;
+		float: left;
+		margin-top: 20px;
+		margin-left: 70px;
+		padding: 10px 15px;
+		text-decoration: none;
+		color: white;
+		-moz-border-radius: 11px;
+		-webkit-border-radius: 11px;
+		border-radius: 11px;
+		font-weight: bold;
+		background-color: red;
+	}
+	
+a.fp
+	{
+		display: block;
+		float: left;
+		margin-top: 20px;
+		margin-left: 70px;
+		padding: 10px 15px;
+		text-decoration: none;
+		color: white;
+		-moz-border-radius: 11px;
+		-webkit-border-radius: 11px;
+		border-radius: 11px;
+		font-weight: bold;
+		background-color: orange;
+	}
+	
+a.continue:hover
+	{
+		background-color: red;
+		color: yellow;
+		border-color: red;
+	}
+	
+a.fp:hover
+	{
+		background-color: blue;
+		border-color: blue;
+		color: white;
+	}
+	
+p.header
+	{
+		color: #1370ab;
+	}
+	
+p.description
+	{
+		font-size: 0.9em;
+		color: #434343;
+	}
+	
+a.moreInfo
+	{
+		font-size: 0.8em;
+		text-decoration: none;
+	}
+
+#details 
+	{
+		display: none;
+	}
+	
+h1
+	{
+		color: #103956;
+	}
+	
+#forIframe
+	{
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		margin: auto;
+	}
+
+.dynForIframeH
+	{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 100%;
+		margin: auto;
+	}
+	
+.dynForIframeW
+	{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		margin: auto;
+	}
+	
+#forIframe a, #forIframe img
+	{
+		border-width: 0px;
+		text-decoration: none;
+	}
+	
+.cleaner {
+	clear: both;
+	font-size: 1px;
+}

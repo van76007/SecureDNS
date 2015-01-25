@@ -1,0 +1,1 @@
+./main_server 100 /usr/local/etc/configDNS/config.ini

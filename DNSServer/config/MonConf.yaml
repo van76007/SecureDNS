@@ -1,0 +1,10 @@
+---
+Database:
+  IP:192.168.230.138
+  name:secdns_dev
+  password:ulaysiP801
+  user:root
+---
+PathCDB:
+  /home/dac/Desktop/NXTGEN_DNS/DNSServer/build
+---

@@ -1,0 +1,398 @@
+ToDo:
+- Make 2 methods to lookup request and response
+- Move creation of DNS packet to those methods and free memory before out
+
+Test:
+1. Compile on .199
+2. Generate test packets
+---------------------------------------------------------------------------
+
+Hi Van,
+
+ 
+
+Your logic is ok. Must I would like to clear some things when you are back.
+
+ 
+
+Logic in pseudo code :
+
+ 
+
+String domain = « subdomain.domain.com »;
+
+Array subdomains = domain.split(‘.’);
+
+ 
+
+Bool mustBreak = false ;
+
+Bool mustBlock =false;
+
+ 
+
+mustBreak = DoWhiteListCheck(domain) ;
+
+ 
+
+if(!mustBreak)
+
+{
+
+                For(int I = subdomains.length – 1; i>=0; i--)
+
+                {
+
+                                Switch(port)
+
+                                {
+
+                                                Case 53:
+
+                                                                mustBlock = mustBlock || lookupCAI(longest url first => up to domain);
+
+                                                                mustBlock = mustBlock || lookupMalware(longest url first => up to domain);
+
+                                                                mustBlock = mustBlock || lookupRBL(longest url first => up to domain);
+
+                                                                break;
+
+                                                Case 20053:
+
+                                                                mustBlock = mustBlock || lookupCAI(longest url first => up to domain);
+
+                                                                mustBlock = mustBlock || lookupMalware(longest url first => up to domain);
+
+                                                                break;
+
+                                                Case 30053:
+
+                                                                mustBlock = mustBlock || lookupCAI(longest url first => up to domain);
+
+                                                                break;
+
+                                                default:
+
+                                                                break;
+
+                                }
+
+                                               
+
+                                if(mustBlock)
+
+                                                break;
+
+                }
+
+}
+
+ 
+
+If(mustBlock)
+
+{
+
+                Block();
+
+}
+
+ 
+
+Method DoLookup(bool checkCNAME)
+
+{
+
+                Do normal request;
+
+               
+
+                If(checkCNAME)
+
+{
+
+                                Check CNAME and IP in whitelist;
+
+                                Set mustblock;
+
+                }
+
+ 
+
+                Return mustBlock;
+
+}
+
+ 
+
+Method lookupRBL()
+
+{
+
+                Bool mustBlock = false;
+
+ 
+
+                Schedule threads :
+
+ 
+
+                mustBlock  = mustBlock || DoNormalLookup();
+
+                mustBlock = mustBlock || RBL1;
+
+                mustBlock = mustBlock || RBL2;
+
+                mustBlock = mustBlock ||  RBL3;
+
+ 
+
+                return mustBlock;                           
+
+}
+--------------------------------------------------------------------------------------
+
+Main recap notes:
+User requests: ‘l1.images.google.com’
+                Does ‘l1.images.google.com’ exist in whitelist ?
+
+                                YES => Let request through
+
+                               NO => Does ‘l1.images.google.com’ in DB
+
+YES: then log ALL found unified_response
+NO => Check ‘images.google.com’ in DB etc ….
+
+Check until we run out of subdomain
+
+How to combine the subdomain checking and tag checking?
+
+Code flow:
+
+In forwarder,
+
+                Bool mustBlock = false;
+
+                switch(port)
+
+                {
+                                case 53;
+
+                                                mustBlock = mustBlock || DoCAILookup(domain);
+                                                mustBlock = mustBlock || DoMAlwareLookup(domain);
+                                                mustBlock = mustBlock || DoRBLLookup(domain);
+
+                }
+
+                If(mustBlock)
+                                CreateBlockedResponse();
+
+                Else
+                                Serve non block response;
+
+In method relay, we get cname and ip. We check execute exact same flow as checking for a url (Full only for whitelist)
+
+For each method, DoCAI, DoMalware etc … if flag = true, then log and return true;
+----------------------------------------------------------------------------------------------------
+Code to parse domain & subdomains:
+Add 1 function in DNS util to parse p->question and get vector of domain/subdomain
+
+std::vector<std::string> strs;
+
+            std::string query(p->question[i]->name, strlen(p->question[i]->name));
+	    boost::split(strs, query, boost::is_any_of("."));
+            std::vector<std::string>::iterator it;
+
+  	    std::cout << "Query contains:\n";
+            int offset = 0;
+            std::string domain(""); // Intermediate result: subdomain/domain. Final one will be domain
+
+  	    for ( it=strs.begin() ; it < strs.end() - 2; it++ ) {
+    	        //std::cout << *it << std::endl;
+                offset += strlen((*it).c_str()) + 1;
+                if (offset < strlen(p->question[i]->name)) {
+                    domain = query.substr(offset);          
+                    std::cout << "sub-domain is: " << domain << std::endl;
+                }
+            }
+
+            if (domain.size() > 0)
+                std::cout << "domain is: " << domain << std::endl;
+
+            std::cout << "End query contains:\n";
+----------------------------------------------------------------------------------------------------
+Add 1 function in dns_util to get the final CNAME and IP
+
+Result of current code when parsing CName:
+
+;; ANSWER:
+name= www.mail.yahoo.com ttl=      1800 class= IN type=CNAME rc.yahoo.com
+name=       rc.yahoo.com ttl=       300 class= IN type=CNAME rc.g01.yahoodns.net
+name=rc.g01.yahoodns.net ttl=       298 class= IN type=CNAME any-rc.a01.yahoodns.net
+name=any-rc.a01.yahoodns.net ttl=       298 class= IN type=    A ip=68.180.206.184
+
+----------------------------------------------------------------------------------
+
+Test it in test parser first
+
+Then we will plug the Blocking Algo implementation into forwarder code.
+
+----------------------------------------------------------------------------------------------------
+1.1.1       Whitelisting and blocking
+
+Whitelisting operates through exact matches i.e. if you white-list ‘www.google.com’, that does not imply that ‘xxx.google.com’ is automatically white listed. If you want to white-list ‘xxx.google.com’, then a separate entry would have to be added to database.
+
+Now, how does white listing affect our general flow? Basically:
+
+   1. Domain contains has a lot of domains that should be blacklisted, but certain legitimate sub-domains also:
+
+·         We add the domain to our blacklist and put our hand-picked legal sub-domains in whitelist.
+
+   2. Domain contains has a lot of domains that should be whitelisted, but certain potentially dangerous sub-domains.
+
+·         We add the specific sub-domains in our whitelist and filter out the domain from our automated process. E.g. If ‘a.google.com’ would happen to be malicious, then, we simply would have the entry ‘a.google.com’ in malware.
+
+--------------------------------------------------------------------------------------------------
+Yup ;-) ..... Meaning it never has a record anywhere.
+By unblock here, I guess we filter out the domain when constructing our malware list ? J 
+Hi,
+
+Thank you very much for your updated – Except for the part highlighted, everything is fine with me J
+Very good question J
+
+See to choices exist : 
+
+·         Domain has a lot of subdomain that should be blacklisted : block domain.com and whitelist legal subdomains.
+
+·         Domain has a lot of subdomains that should be whitelisted : unblock domain.com and block every subdomain that should be block.
+
+For both this means what we need to do in the whitelist. Would not be *.domain.com – but single subdomains that conflict with another all block.
+
+If same domain exist in both whitelist and blacklist – then whitelist take priority.
+
+There are exact string match for white list…. That means an entry domain.com. does NOT mean www.domain.com are whitelisted.
+ 
+I agree there can theoretically be situations where we can have conflict. But remember we also have the dataimport filters to reduce conflicts. 
+
+I hope the above answer your question ?
+
+Hi Johnny,
+ 
+
+If possible, could you please confirm the following logic:
+
+User queries : Sub.mydomain.com
+
+Here :    sub.mydomain.com is the subdomain
+
+                Mydomain.com is the domain
+
+Our blocking strategy roughly resumes to :
+Check if Sub.Mydomain.com exists in whitelist 
+
+                YES : Forward normal response
+                 NO : Check if Sub.mydomain.com exists in malware
+
+                YES : Block
+
+                NO : Check if domain exists in malware
+
+                                YES : Block
+
+                                NO : Forward normal response 
+
+My question ? Do we ever check if the domain is white-listed in this scenario – I guess we should not, doesn’t make sense to me.
+
+But then if e.g. we DO actually want to whitelist all domains belonging to mydomain.com, how do we do ? Maybe *.mydomain.com in DB ? Then we query DB twice ?
+
+-----------------------------------------------------
+Response: 
+- In case of CName: Cname is chained together, get the last (CName, IP)
+- Check IP and CName in (Whitelist, Blacklist) the same as Original query
+
+Query:
+- Get the longest and original string, look up in Whitelist first then the Blacklist later.
+- If can not find, then get all the subdomains and lookup in the malware only.
+
+Whitelist is COMMON for 4 categories: Malware, Childporn and Whitelist
+
+CNAME lookup the same way as domain/subdomain
+IP does not make sense to lookup sub-IP
+
+--------------------
+Final algo:
+
+Main recap notes:
+
+ 
+
+User requests: ‘l1.images.google.com’
+
+ 
+
+                Does ‘l1.images.google.com’ exist in whitelist ?
+
+               
+
+                                YES => Let request through
+
+ 
+
+                                NO => Does ‘l1.images.google.com’ in DB
+
+ 
+
+                                                NO => Check ‘images.google.com’ in DB etc ….
+
+ 
+
+ 
+
+ 
+
+Code flow:
+
+ 
+
+In forwarder,
+
+ 
+
+                Bool mustBlock = false;
+
+ 
+
+                switch(port)
+
+                {
+
+                                case 53;
+
+                                                mustBlock = mustBlock || DoCAILookup(domain);
+
+                                                mustBlock = mustBlock || DoMAlwareLookup(domain);
+
+                                                mustBlock = mustBlock || DoRBLLookup(domain);
+
+                }
+
+ 
+
+                If(mustBlock)
+
+                                CreateBlockedResponse();
+
+                Else
+
+                                Serve non block response;
+
+ 
+
+ 
+
+In method relay, we get cname and ip. We check execute exact same flow as checking for a url (Full only for whitelist)
+
+ 
+
+For each method, DoCAI, DoMalware etc … if flag = true, then log and return true;
+ 

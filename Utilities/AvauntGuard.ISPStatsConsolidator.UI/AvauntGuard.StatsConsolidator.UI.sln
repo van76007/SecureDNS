@@ -1,0 +1,89 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.ISPStatsConsolidator.UI", "AvauntGuard.ISPStatsConsolidator.UI\AvauntGuard.ISPStatsConsolidator.UI.csproj", "{15B3E6D7-F697-4D44-BF80-5CFE582A5AAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.ISPStatsConsolidator.Lib", "AvauntGuard.ISPStatsConsolidator.Lib\AvauntGuard.ISPStatsConsolidator.Lib.csproj", "{BDA0965E-0F4F-4CD8-A437-AE733077B647}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{0AEEA3AA-C3E5-4CA2-BA08-F967B1EDD958}"
+	ProjectSection(SolutionItems) = preProject
+		lib\HtmlAgilityPack.dll = lib\HtmlAgilityPack.dll
+		lib\HtmlAgilityPack.XML = lib\HtmlAgilityPack.XML
+		lib\Microsoft.Practices.EnterpriseLibrary.Common.dll = lib\Microsoft.Practices.EnterpriseLibrary.Common.dll
+		lib\Microsoft.Practices.EnterpriseLibrary.Data.dll = lib\Microsoft.Practices.EnterpriseLibrary.Data.dll
+		lib\Microsoft.Practices.ObjectBuilder2.dll = lib\Microsoft.Practices.ObjectBuilder2.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{2EED60C7-360E-4460-92BB-353C6F080F1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raccoom.Xml", "Raccoom.Xml\Raccoom.Xml.csproj", "{5CAAE842-11D7-42F8-9C81-096252F57C76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.HTMLAgilityParser.Lib", "..\HTML_Parser\HTMLAgilityParser\AvauntGuard.HTMLAgilityParser.Lib.csproj", "{0A2964A2-E091-49CB-93BC-08D52FA8AEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.MailSender.Lib", "AvauntGuard.MailSender.Lib\AvauntGuard.MailSender.Lib.csproj", "{F7A8DFD0-0367-47C6-8B27-EEF8F959521B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.ISPStatsConsolidator.WebUI", "AvauntGuard.ISPStatsConsolidator.WebUI\AvauntGuard.ISPStatsConsolidator.WebUI.csproj", "{7E7C798C-59EB-496D-AA23-59D362070731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.MalwareDataConsolidator.Lib", "AvauntGuard.MalwareDataConsolidator.Lib\AvauntGuard.MalwareDataConsolidator.Lib.csproj", "{6F0C15AB-3312-464E-8491-A8AFBE604D84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvauntGuard.MalwareDataConsolidator.UI", "AvauntGuard.MalwareDataConsolidator.UI\AvauntGuard.MalwareDataConsolidator.UI.csproj", "{3BCC49C1-7289-4776-BFCC-DE203132743D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Malware", "Malware", "{93DE7E6A-B370-4CBD-899F-27B882C4435F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Statistics", "Statistics", "{EC57A8D4-D86F-4452-BDB6-0075D3930A4B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{73EFCE38-99C4-4C3A-9FFB-8A172E840EF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15B3E6D7-F697-4D44-BF80-5CFE582A5AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15B3E6D7-F697-4D44-BF80-5CFE582A5AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15B3E6D7-F697-4D44-BF80-5CFE582A5AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15B3E6D7-F697-4D44-BF80-5CFE582A5AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA0965E-0F4F-4CD8-A437-AE733077B647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA0965E-0F4F-4CD8-A437-AE733077B647}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA0965E-0F4F-4CD8-A437-AE733077B647}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA0965E-0F4F-4CD8-A437-AE733077B647}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CAAE842-11D7-42F8-9C81-096252F57C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CAAE842-11D7-42F8-9C81-096252F57C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CAAE842-11D7-42F8-9C81-096252F57C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CAAE842-11D7-42F8-9C81-096252F57C76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A2964A2-E091-49CB-93BC-08D52FA8AEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A2964A2-E091-49CB-93BC-08D52FA8AEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A2964A2-E091-49CB-93BC-08D52FA8AEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A2964A2-E091-49CB-93BC-08D52FA8AEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A8DFD0-0367-47C6-8B27-EEF8F959521B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A8DFD0-0367-47C6-8B27-EEF8F959521B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A8DFD0-0367-47C6-8B27-EEF8F959521B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A8DFD0-0367-47C6-8B27-EEF8F959521B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7C798C-59EB-496D-AA23-59D362070731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7C798C-59EB-496D-AA23-59D362070731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7C798C-59EB-496D-AA23-59D362070731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7C798C-59EB-496D-AA23-59D362070731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F0C15AB-3312-464E-8491-A8AFBE604D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F0C15AB-3312-464E-8491-A8AFBE604D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F0C15AB-3312-464E-8491-A8AFBE604D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F0C15AB-3312-464E-8491-A8AFBE604D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BCC49C1-7289-4776-BFCC-DE203132743D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BCC49C1-7289-4776-BFCC-DE203132743D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BCC49C1-7289-4776-BFCC-DE203132743D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BCC49C1-7289-4776-BFCC-DE203132743D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5CAAE842-11D7-42F8-9C81-096252F57C76} = {2EED60C7-360E-4460-92BB-353C6F080F1F}
+		{3BCC49C1-7289-4776-BFCC-DE203132743D} = {93DE7E6A-B370-4CBD-899F-27B882C4435F}
+		{6F0C15AB-3312-464E-8491-A8AFBE604D84} = {93DE7E6A-B370-4CBD-899F-27B882C4435F}
+		{BDA0965E-0F4F-4CD8-A437-AE733077B647} = {EC57A8D4-D86F-4452-BDB6-0075D3930A4B}
+		{7E7C798C-59EB-496D-AA23-59D362070731} = {EC57A8D4-D86F-4452-BDB6-0075D3930A4B}
+		{15B3E6D7-F697-4D44-BF80-5CFE582A5AAB} = {EC57A8D4-D86F-4452-BDB6-0075D3930A4B}
+		{0A2964A2-E091-49CB-93BC-08D52FA8AEAB} = {73EFCE38-99C4-4C3A-9FFB-8A172E840EF7}
+		{F7A8DFD0-0367-47C6-8B27-EEF8F959521B} = {73EFCE38-99C4-4C3A-9FFB-8A172E840EF7}
+	EndGlobalSection
+EndGlobal

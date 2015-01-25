@@ -1,0 +1,10 @@
+---
+Database:
+  IP:192.168.230.138
+  name:secDNS
+  password:ulaysiP801
+  user:root
+---
+PathCDB:
+  /home/yesterday/NXTGEN_DNS/trunk/DNSServer/build
+---

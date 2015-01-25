@@ -1,0 +1,24 @@
+SQL -> CDB:
+
+ip.cdb (ip1.cdb, ip2.cdb)
+malware.cdb (malware1.cdb, malware2.cdb)
+childporn.cdb (childporn1.cdb, childporn2.cdb)
+whitelist.cdb (whitelist1.cdb, whitelist2.cdb)
+
+Each dump will generate 1 DB log file:
+dblog_ip
+dblog_malware
+dblog_childporn
+dblog_whitelist
+
+Content of DB log file will be EITHER: "F1 is in use" or "F2 is in use".
+
+Algo: Take example of IP table:
++ Dump SQL to ip1.cdb
++ Finish, write to dblog_ip: "F1 is in use"
+
+Next run:
++ Read dblog_ip, see "F1 is in use", then Dump SQL to ip2.cdb
++ Finish, write to dblog_ip: "F2 is in use"
+
+Becareful or we will be out-of-sync:-)
